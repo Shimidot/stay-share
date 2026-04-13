@@ -1,0 +1,908 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Love日向 ステイ＆シェア｜地域事業者の皆さまへ</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@300;400;500;700&family=Noto+Sans+JP:wght@300;400;500&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --ink:        #111111;
+      --ink-light:  #333333;
+      --ink-faint:  #666666;
+      --shore:      #f7f4ef;
+      --shore-dark: #ede8e0;
+      --ocean:      #2d6a8a;
+      --wave:       #6aafe6;
+      --sun:        #d4830a;
+      --white:      #ffffff;
+      --line:       rgba(26,26,26,0.15);
+    }
+
+    html { scroll-behavior: smooth; font-size: 16px; }
+
+    body {
+      font-family: 'Noto Sans JP', sans-serif;
+      font-weight: 600;
+      color: var(--ink);
+      background: var(--white);
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ─── UTILITY ─── */
+    .en { font-family: 'Cormorant Garamond', serif; }
+    .container { max-width: 1160px; margin: 0 auto; padding: 0 48px; }
+    .container--narrow { max-width: 760px; margin: 0 auto; padding: 0 48px; }
+
+    /* ─── NAV ─── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 48px; height: 72px;
+      transition: background 0.4s, border-color 0.4s;
+      border-bottom: 1px solid transparent;
+    }
+    nav.scrolled {
+      background: rgba(247,244,239,0.95);
+      border-bottom-color: var(--line);
+      backdrop-filter: blur(10px);
+    }
+    .nav-logo {
+      font-family: 'Noto Serif JP', serif;
+      font-weight: 400; font-size: 1.0625rem; letter-spacing: 0.12em;
+      color: var(--white); transition: color 0.4s;
+    }
+    nav.scrolled .nav-logo { color: var(--ink); }
+    .nav-logo small {
+      display: block; font-family: 'Cormorant Garamond', serif;
+      font-size: 1.0625rem; font-weight: 300; letter-spacing: 0.2em;
+      opacity: 0.7; margin-top: 1px;
+    }
+    .nav-right { display: flex; align-items: center; gap: 36px; }
+    .nav-links { display: flex; gap: 28px; list-style: none; }
+    .nav-links a {
+      text-decoration: none; font-size: 1.0625rem; font-weight: 400;
+      letter-spacing: 0.06em; color: rgba(255,255,255,0.85);
+      transition: color 0.3s; padding-bottom: 2px;
+      border-bottom: 1px solid transparent; transition: border-color 0.3s, color 0.3s;
+    }
+    .nav-links a:hover { color: var(--white); border-bottom-color: rgba(255,255,255,0.5); }
+    nav.scrolled .nav-links a { color: var(--ink-light); }
+    nav.scrolled .nav-links a:hover { color: var(--ink); border-bottom-color: var(--ink); }
+    .nav-cta {
+      font-size: 1.0625rem; font-weight: 400; letter-spacing: 0.1em;
+      color: var(--white); border: 1px solid rgba(255,255,255,0.6);
+      padding: 9px 22px; text-decoration: none;
+      transition: background 0.3s, color 0.3s, border-color 0.3s;
+    }
+    .nav-cta:hover { background: var(--white); color: var(--ink); border-color: var(--white); }
+    nav.scrolled .nav-cta { color: var(--ink); border-color: var(--ink); }
+    nav.scrolled .nav-cta:hover { background: var(--ink); color: var(--white); }
+
+    /* ─── HERO ─── */
+    .hero {
+      height: 100vh; min-height: 640px;
+      position: relative; overflow: hidden;
+      display: flex; align-items: flex-end;
+    }
+    .hero-bg {
+      position: absolute; inset: 0;
+      background:
+        linear-gradient(to bottom, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.05) 40%, rgba(0,0,0,0.55) 100%),
+        linear-gradient(160deg, #0e4a6e 0%, #1a7aaa 35%, #4ab5d4 60%, #a8dff0 80%, #d8f0f7 100%);
+    }
+    /* 波模様 */
+    .hero-wave {
+      position: absolute; bottom: 0; left: 0; right: 0; height: 200px;
+      background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 200'%3E%3Cpath fill='rgba(255,255,255,0.06)' d='M0,100 C200,160 400,40 600,100 C800,160 1000,40 1200,100 C1320,140 1380,80 1440,100 L1440,200 L0,200Z'/%3E%3Cpath fill='rgba(255,255,255,0.04)' d='M0,140 C240,80 480,180 720,120 C960,60 1200,160 1440,120 L1440,200 L0,200Z'/%3E%3C/svg%3E") no-repeat bottom;
+      background-size: cover;
+      pointer-events: none;
+    }
+    .hero-content {
+      position: relative; z-index: 10;
+      padding: 0 80px 80px;
+      max-width: 900px;
+    }
+    .hero-eyebrow {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.0625rem; font-weight: 300; letter-spacing: 0.3em;
+      color: rgba(255,255,255,0.7); text-transform: uppercase;
+      margin-bottom: 24px;
+      animation: fadeUp 1s 0.2s both;
+    }
+    .hero h1 {
+      font-family: 'Noto Serif JP', serif;
+      font-size: clamp(2.6rem, 5.5vw, 4.8rem);
+      font-weight: 300; line-height: 1.35; letter-spacing: 0.04em;
+      color: var(--white); margin-bottom: 28px;
+      animation: fadeUp 1s 0.4s both;
+    }
+    .hero h1 strong { font-weight: 700; display: block; }
+    .hero-desc {
+      font-size: 1.0625rem; font-weight: 400; line-height: 2;
+      color: rgba(255,255,255,0.92); max-width: 480px;
+      margin-bottom: 48px;
+      animation: fadeUp 1s 0.6s both;
+    }
+    .hero-actions {
+      display: flex; gap: 20px; flex-wrap: wrap;
+      animation: fadeUp 1s 0.8s both;
+    }
+    .btn-hero-primary {
+      font-size: 1.0625rem; letter-spacing: 0.14em; font-weight: 400;
+      color: var(--ink); background: var(--white);
+      padding: 14px 36px; text-decoration: none;
+      transition: background 0.3s, color 0.3s, transform 0.2s;
+    }
+    .btn-hero-primary:hover { background: var(--shore); transform: translateY(-2px); }
+    .btn-hero-ghost {
+      font-size: 1.0625rem; letter-spacing: 0.14em; font-weight: 400;
+      color: var(--white); border: 1px solid rgba(255,255,255,0.5);
+      padding: 14px 36px; text-decoration: none;
+      transition: background 0.3s, border-color 0.3s, transform 0.2s;
+    }
+    .btn-hero-ghost:hover { background: rgba(255,255,255,0.1); border-color: var(--white); transform: translateY(-2px); }
+    .hero-scroll-hint {
+      position: absolute; bottom: 32px; right: 80px; z-index: 10;
+      display: flex; align-items: center; gap: 12px;
+      color: rgba(255,255,255,0.5); font-size: 1.0625rem; letter-spacing: 0.2em;
+      text-transform: uppercase;
+      animation: fadeIn 1s 1.2s both;
+    }
+    .hero-scroll-hint::after {
+      content: '';
+      display: block; width: 60px; height: 1px;
+      background: rgba(255,255,255,0.3);
+    }
+
+    /* ─── SECTION BASE ─── */
+    .section { padding: 120px 0; }
+    .section--shore { background: var(--shore); }
+    .section--white { background: var(--white); }
+    .section--dark { background: var(--ink); color: var(--white); }
+
+    .label {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.0625rem; letter-spacing: 0.28em; font-weight: 400;
+      color: var(--ocean); text-transform: uppercase;
+      display: block; margin-bottom: 20px;
+    }
+    .section--dark .label { color: var(--wave); }
+    .section-title {
+      font-family: 'Noto Serif JP', serif;
+      font-size: clamp(1.9rem, 3.5vw, 3rem);
+      font-weight: 300; line-height: 1.4; letter-spacing: 0.04em;
+      color: var(--ink); margin-bottom: 24px;
+    }
+    .section--dark .section-title { color: var(--white); }
+    .section-body {
+      font-size: 1.0625rem; font-weight: 400; line-height: 2.1;
+      color: var(--ink-light);
+    }
+    .section--dark .section-body { color: rgba(255,255,255,0.85); }
+    hr.divider {
+      border: none; border-top: 1px solid var(--line);
+      margin: 0;
+    }
+
+    /* ─── INTRO ─── */
+    .intro-grid {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 120px; align-items: center;
+    }
+    .intro-visual {
+      position: relative;
+    }
+    .intro-card-main {
+      background: linear-gradient(135deg, #1a6a9a, #4ab5d4);
+      border-radius: 2px; padding: 60px 48px;
+      color: var(--white); position: relative; overflow: hidden;
+    }
+    .intro-card-main::before {
+      content: 'STAY\A&\ASHARE';
+      white-space: pre;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 7rem; font-weight: 300; line-height: 0.9;
+      position: absolute; right: -16px; top: -16px;
+      color: rgba(255,255,255,0.07); letter-spacing: -0.02em;
+    }
+    .intro-stats { display: flex; flex-direction: column; gap: 1px; }
+    .stat-row {
+      display: flex; justify-content: space-between; align-items: baseline;
+      padding: 24px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.15);
+    }
+    .stat-row:last-child { border-bottom: none; }
+    .stat-value {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 3rem; font-weight: 300; line-height: 1; letter-spacing: -0.02em;
+    }
+    .stat-value small { font-size: 1.2rem; }
+    .stat-label { font-size: 1.0625rem; font-weight: 400; opacity: 0.9; text-align: right; line-height: 1.6; }
+
+    /* ─── CONCEPT ─── */
+    .concept-split {
+      display: grid; grid-template-columns: 1fr 1fr;
+      min-height: 560px;
+    }
+    .concept-text {
+      padding: 100px 80px; display: flex; flex-direction: column; justify-content: center;
+    }
+    .concept-visual {
+      background: linear-gradient(160deg, #0e3d5e 0%, #1a7aaa 50%, #6abed8 100%);
+      position: relative; overflow: hidden;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .concept-visual-inner {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(4rem, 8vw, 8rem); font-weight: 300;
+      color: rgba(255,255,255,0.12); letter-spacing: 0.05em;
+      line-height: 0.9; text-align: center; user-select: none;
+    }
+    .concept-visual-label {
+      position: absolute; bottom: 40px; left: 40px;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.0625rem; letter-spacing: 0.2em;
+      color: rgba(255,255,255,0.5); text-transform: uppercase;
+    }
+    .flow-row {
+      display: flex; flex-direction: column; gap: 0; margin-top: 48px;
+    }
+    .flow-step {
+      display: flex; gap: 28px; align-items: flex-start;
+      padding: 28px 0; border-bottom: 1px solid var(--line);
+    }
+    .flow-step:last-child { border-bottom: none; }
+    .flow-num {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2.2rem; font-weight: 300; color: var(--ocean);
+      line-height: 1; min-width: 36px; padding-top: 2px;
+    }
+    .flow-info {}
+    .flow-title { font-size: 1.0625rem; font-weight: 500; margin-bottom: 6px; letter-spacing: 0.04em; }
+    .flow-desc { font-size: 1.0625rem; font-weight: 400; line-height: 1.85; color: var(--ink-light); }
+
+    /* ─── BENEFITS ─── */
+    .benefits-header {
+      display: grid; grid-template-columns: 1fr 2fr;
+      gap: 80px; align-items: end;
+      padding-bottom: 64px; border-bottom: 1px solid var(--line);
+      margin-bottom: 64px;
+    }
+    .benefits-grid {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 1px; background: var(--line);
+    }
+    .benefit-item {
+      background: var(--white); padding: 52px 44px;
+      transition: background 0.3s;
+    }
+    .benefit-item:hover { background: var(--shore); }
+    .benefit-num {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.0625rem; letter-spacing: 0.22em; color: var(--ocean);
+      display: block; margin-bottom: 32px;
+    }
+    .benefit-title {
+      font-family: 'Noto Serif JP', serif;
+      font-size: 1.1rem; font-weight: 400; letter-spacing: 0.04em;
+      margin-bottom: 16px; line-height: 1.5;
+    }
+    .benefit-desc {
+      font-size: 1.0625rem; font-weight: 400; line-height: 1.95;
+      color: var(--ink-light);
+    }
+
+    /* ─── MECHANISM ─── */
+    .mechanism-row {
+      display: grid; grid-template-columns: repeat(4, 1fr);
+      gap: 1px; background: rgba(255,255,255,0.1);
+      margin-top: 64px;
+    }
+    .mech-item {
+      padding: 48px 36px;
+      background: rgba(255,255,255,0.04);
+      transition: background 0.3s;
+    }
+    .mech-item:hover { background: rgba(255,255,255,0.08); }
+    .mech-num {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 3.5rem; font-weight: 300;
+      color: rgba(255,255,255,0.15); line-height: 1;
+      margin-bottom: 24px; display: block;
+    }
+    .mech-actor {
+      font-size: 1.0625rem; letter-spacing: 0.18em;
+      color: var(--wave); text-transform: uppercase;
+      margin-bottom: 10px; display: block;
+    }
+    .mech-title { font-size: 1.0625rem; font-weight: 500; color: var(--white); margin-bottom: 12px; }
+    .mech-desc { font-size: 1.0625rem; font-weight: 400; line-height: 1.85; color: rgba(255,255,255,0.82); }
+    .mech-arrow {
+      display: flex; align-items: center; justify-content: center;
+      color: rgba(255,255,255,0.2); font-size: 1.2rem;
+    }
+
+    /* ─── STEPS ─── */
+    .steps-list {
+      margin-top: 64px;
+      counter-reset: steps;
+    }
+    .step-item {
+      display: grid; grid-template-columns: 80px 1fr;
+      gap: 40px; align-items: start;
+      padding: 40px 0; border-bottom: 1px solid var(--line);
+    }
+    .step-item:first-child { border-top: 1px solid var(--line); }
+    .step-left {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2.8rem; font-weight: 300; color: var(--shore-dark);
+      line-height: 1; padding-top: 4px;
+    }
+    .step-right {}
+    .step-title {
+      font-family: 'Noto Serif JP', serif;
+      font-size: 1.0625rem; font-weight: 400; letter-spacing: 0.04em;
+      margin-bottom: 10px;
+    }
+    .step-desc { font-size: 1.0625rem; font-weight: 400; line-height: 1.9; color: var(--ink-light); }
+    .step-tag {
+      display: inline-block; font-size: 1.0625rem; letter-spacing: 0.12em;
+      color: var(--ocean); border: 1px solid rgba(45,106,138,0.3);
+      padding: 3px 10px; margin-bottom: 12px;
+    }
+
+    /* ─── FAQ ─── */
+    .faq-list { margin-top: 64px; }
+    .faq-item { border-bottom: 1px solid var(--line); }
+    .faq-item:first-child { border-top: 1px solid var(--line); }
+    .faq-q {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 28px 0; cursor: pointer;
+      font-size: 1.0625rem; font-weight: 400; letter-spacing: 0.03em;
+      transition: color 0.2s;
+      user-select: none; list-style: none;
+    }
+    .faq-q:hover { color: var(--ocean); }
+    .faq-icon {
+      width: 24px; height: 24px; flex-shrink: 0; margin-left: 24px;
+      position: relative;
+    }
+    .faq-icon::before, .faq-icon::after {
+      content: ''; position: absolute;
+      background: currentColor; border-radius: 1px;
+      transition: transform 0.3s, opacity 0.3s;
+    }
+    .faq-icon::before { width: 14px; height: 1px; top: 50%; left: 50%; transform: translate(-50%,-50%); }
+    .faq-icon::after  { width: 1px; height: 14px; top: 50%; left: 50%; transform: translate(-50%,-50%); }
+    .faq-item.open .faq-icon::after { transform: translate(-50%,-50%) rotate(90deg); opacity: 0; }
+    .faq-a {
+      font-size: 1.0625rem; font-weight: 400; line-height: 1.95;
+      color: var(--ink-light); max-height: 0; overflow: hidden;
+      transition: max-height 0.4s ease, padding 0.4s ease;
+      padding-bottom: 0;
+    }
+    .faq-item.open .faq-a { max-height: 200px; padding-bottom: 28px; }
+
+    /* ─── CTA ─── */
+    .cta-section {
+      padding: 140px 0;
+      background: var(--shore);
+      text-align: center;
+    }
+    .cta-eyebrow {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.0625rem; letter-spacing: 0.28em; color: var(--ink-faint);
+      text-transform: uppercase; display: block; margin-bottom: 28px;
+    }
+    .cta-title {
+      font-family: 'Noto Serif JP', serif;
+      font-size: clamp(2rem, 4vw, 3.2rem);
+      font-weight: 400; line-height: 1.5; letter-spacing: 0.04em;
+      color: var(--ink); margin-bottom: 20px;
+    }
+    .cta-desc {
+      font-size: 1.0625rem; font-weight: 400; line-height: 2;
+      color: var(--ink-light); margin-bottom: 56px;
+    }
+    .cta-contact {
+      display: inline-block;
+      border: 1px solid var(--line);
+      padding: 48px 72px; background: var(--white);
+      text-align: left;
+    }
+    .cta-contact .org {
+      font-size: 1.0625rem; letter-spacing: 0.16em; color: var(--ink-faint);
+      text-transform: uppercase; display: block; margin-bottom: 10px;
+    }
+    .cta-contact .name {
+      font-family: 'Noto Serif JP', serif;
+      font-size: 1.3rem; font-weight: 400; letter-spacing: 0.06em;
+      color: var(--ink); margin-bottom: 20px;
+    }
+    .cta-contact .meta {
+      font-size: 1.0625rem; font-weight: 400; color: var(--ink-light); line-height: 2.2;
+    }
+    .cta-btn {
+      display: inline-block; margin-top: 40px;
+      font-size: 1.0625rem; letter-spacing: 0.16em;
+      color: var(--white); background: var(--ink);
+      padding: 16px 48px; text-decoration: none;
+      transition: background 0.3s, transform 0.2s;
+    }
+    .cta-btn:hover { background: var(--ocean); transform: translateY(-2px); }
+
+    /* ─── FOOTER ─── */
+    footer {
+      background: var(--ink); color: rgba(255,255,255,0.3);
+      padding: 48px; display: flex; justify-content: space-between; align-items: center;
+    }
+    footer .f-logo {
+      font-family: 'Noto Serif JP', serif; font-size: 1.0625rem; font-weight: 400;
+      letter-spacing: 0.1em; color: rgba(255,255,255,0.6);
+    }
+    footer small { font-size: 1.0625rem; }
+
+    /* ─── ANIMATIONS ─── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; } to { opacity: 1; }
+    }
+    .reveal {
+      opacity: 0; transform: translateY(28px);
+      transition: opacity 0.8s cubic-bezier(.4,0,.2,1), transform 0.8s cubic-bezier(.4,0,.2,1);
+    }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+    .reveal-delay-1 { transition-delay: 0.1s; }
+    .reveal-delay-2 { transition-delay: 0.2s; }
+    .reveal-delay-3 { transition-delay: 0.3s; }
+
+    /* ─── RESPONSIVE ─── */
+    @media (max-width: 900px) {
+      .container, .container--narrow { padding: 0 24px; }
+      nav { padding: 0 24px; }
+      .nav-links { display: none; }
+      .hero-content { padding: 0 24px 60px; }
+      .hero-scroll-hint { display: none; }
+      .intro-grid, .concept-split, .benefits-header { grid-template-columns: 1fr; gap: 40px; }
+      .concept-text { padding: 60px 24px; }
+      .concept-visual { height: 280px; }
+      .mechanism-row { grid-template-columns: 1fr 1fr; }
+      .benefits-grid { grid-template-columns: 1fr; }
+      .step-item { grid-template-columns: 56px 1fr; gap: 20px; }
+      footer { flex-direction: column; gap: 12px; text-align: center; }
+      .cta-contact { padding: 36px 28px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav id="nav">
+    <div class="nav-logo">
+      Love日向 ステイ＆シェア
+      <small>HYUGA STAY &amp; SHARE</small>
+    </div>
+    <div class="nav-right">
+      <ul class="nav-links">
+        <li><a href="#intro">企画について</a></li>
+        <li><a href="#benefits">メリット</a></li>
+        <li><a href="#mechanism">仕組み</a></li>
+        <li><a href="#steps">参加の流れ</a></li>
+        <li><a href="#faq">FAQ</a></li>
+      </ul>
+      <a href="#contact" class="nav-cta">お問い合わせ</a>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-wave"></div>
+    <div class="hero-content">
+      <p class="hero-eyebrow">Hyuga City Branding Project 2026</p>
+      <h1>
+        <strong>あなたの空室が、<br>
+        日本中に届く<br>コンテンツになる。</strong>
+      </h1>
+      <p class="hero-desc">
+        若手クリエイターが日向市に滞在し、<br>
+        あなたの体験・サービスをSNSで発信します。<br>
+        追加費用ゼロ。地域と共に、ファンを育てる新しい仕組み。
+      </p>
+      <div class="hero-actions">
+        <a href="#steps" class="btn-hero-primary">参加の流れを見る</a>
+        <a href="#intro" class="btn-hero-ghost">企画について知る</a>
+      </div>
+    </div>
+    <div class="hero-scroll-hint">Scroll</div>
+  </section>
+
+  <hr class="divider">
+
+  <!-- INTRO -->
+  <section class="section section--white" id="intro">
+    <div class="container">
+      <div class="intro-grid">
+        <div class="reveal">
+          <span class="label">About</span>
+          <h2 class="section-title">日向市と<br>クリエイターを<br>つなぐ新しい形</h2>
+          <p class="section-body" style="margin-top:24px;">
+            オフシーズンの空室、活用できていない体験プログラム。<br><br>
+            SNSで発信したいけれどノウハウがない。<br><br>
+            そんな課題を、発信力を持つ若手クリエイターとの
+            マッチングで解決する新しいブランディング事業です。
+          </p>
+        </div>
+        <div class="intro-visual reveal reveal-delay-2">
+          <div class="intro-card-main">
+            <div class="intro-stats">
+              <div class="stat-row">
+                <span class="stat-value en">9<small>–</small>15<small> 名</small></span>
+                <span class="stat-label">選抜クリエイターが<br>日向市に滞在</span>
+              </div>
+              <div class="stat-row">
+                <span class="stat-value en">50<small>+</small></span>
+                <span class="stat-label">ショート動画を<br>制作・発信</span>
+              </div>
+              <div class="stat-row">
+                <span class="stat-value en">3</span>
+                <span class="stat-label"><br>三位一体の地域経済活性化</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <!-- CONCEPT -->
+  <section class="concept-split" id="concept">
+    <div class="concept-text">
+      <span class="label">Concept</span>
+      <h2 class="section-title reveal">応援の循環が<br>日向の魅力を<br>広げていく</h2>
+      <div class="flow-row">
+        <div class="flow-step reveal reveal-delay-1">
+          <span class="flow-num en">01</span>
+          <div class="flow-info">
+            <div class="flow-title">地域事業者がリソースを提供</div>
+            <div class="flow-desc">空室・体験・食事などをリターンとして持ち寄ります。現金負担は不要です。</div>
+          </div>
+        </div>
+        <div class="flow-step reveal reveal-delay-2">
+          <span class="flow-num en">02</span>
+          <div class="flow-info">
+            <div class="flow-title">事務局がマッチングを行う</div>
+            <div class="flow-desc">クリエイターの得意分野・スタイルを踏まえて最適な組み合わせを調整します。</div>
+          </div>
+        </div>
+        <div class="flow-step reveal reveal-delay-3">
+          <span class="flow-num en">03</span>
+          <div class="flow-info">
+            <div class="flow-title">クリエイターが滞在・発信</div>
+            <div class="flow-desc">現地で体験し、日向の魅力をSNSでリアルに届けます。継続的な発信でファンを育てます。</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="concept-visual reveal">
+      <div class="concept-visual-inner">STAY<br>&amp;<br>SHARE</div>
+      <div class="concept-visual-label">Win — Win Project</div>
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <!-- BENEFITS -->
+  <section class="section section--white" id="benefits">
+    <div class="container">
+      <div class="benefits-header reveal">
+        <div>
+          <span class="label">Benefits</span>
+          <h2 class="section-title">参加する<br>メリット</h2>
+        </div>
+        <p class="section-body">
+          地域事業者にとって、本プログラムへの参加は
+          費用ゼロで本格的なSNSプロモーションを実現できる機会です。
+          オフシーズンの空きリソースを活用しながら、
+          新しい顧客層へのリーチを実現します。
+        </p>
+      </div>
+      <div class="benefits-grid">
+        <div class="benefit-item reveal">
+          <span class="benefit-num en">01 — SNS</span>
+          <h3 class="benefit-title">無料の<br>本格SNS発信</h3>
+          <p class="benefit-desc">Instagram・TikTok・YouTube Shortsなど、縦型ショート動画を中心にプロクオリティのコンテンツを制作・発信します。</p>
+        </div>
+        <div class="benefit-item reveal reveal-delay-1">
+          <span class="benefit-num en">02 — Resource</span>
+          <h3 class="benefit-title">空きリソースの<br>価値化</h3>
+          <p class="benefit-desc">オフシーズン・平日の空室や体験の空き枠をリターンとして提供するだけ。在庫化できなかったリソースが価値に変わります。</p>
+        </div>
+        <div class="benefit-item reveal reveal-delay-2">
+          <span class="benefit-num en">03 — Reach</span>
+          <h3 class="benefit-title">新しい<br>顧客層へのリーチ</h3>
+          <p class="benefit-desc">若年層・旅行好き・サーフィン・アウトドア層など、これまでアプローチできていなかったSNSユーザーへ自然な形で認知が広がります。</p>
+        </div>
+        <div class="benefit-item reveal reveal-delay-3">
+          <span class="benefit-num en">04 — Content</span>
+          <h3 class="benefit-title">コンテンツ素材の<br>取得</h3>
+          <p class="benefit-desc">クリエイターが制作した写真・動画素材を、合意書に基づいて自社SNSや販促物にも活用できます。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MECHANISM -->
+  <section class="section section--dark" id="mechanism">
+    <div class="container">
+      <div class="reveal">
+        <span class="label">Mechanism</span>
+        <h2 class="section-title">プログラムの仕組み</h2>
+      </div>
+      <div class="mechanism-row">
+        <div class="mech-item reveal">
+          <span class="mech-num en">01</span>
+          <span class="mech-actor">地域事業者</span>
+          <div class="mech-title">空室・体験を提供</div>
+          <div class="mech-desc">宿泊・食事・体験などをリターンとして持ち寄り、クリエイターの滞在を支援します。</div>
+        </div>
+        <div class="mech-item reveal reveal-delay-1">
+          <span class="mech-num en">02</span>
+          <span class="mech-actor">事務局</span>
+          <div class="mech-title">マッチング調整</div>
+          <div class="mech-desc">得意分野・スタイル・希望を踏まえて最適な組み合わせを設計します。</div>
+        </div>
+        <div class="mech-item reveal reveal-delay-2">
+          <span class="mech-num en">03</span>
+          <span class="mech-actor">クリエイター</span>
+          <div class="mech-title">滞在・取材・発信</div>
+          <div class="mech-desc">現地で体験し、日向の魅力をSNSでリアルに・継続的に届けます。</div>
+        </div>
+        <div class="mech-item reveal reveal-delay-3">
+          <span class="mech-num en">04</span>
+          <span class="mech-actor">地域全体</span>
+          <div class="mech-title">関係人口の増加</div>
+          <div class="mech-desc">継続的な発信が日向ファンを育て、訪問・移住・リピートへとつながっていきます。</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- STEPS -->
+  <section class="section section--shore" id="steps">
+    <div class="container--narrow">
+      <div class="reveal">
+        <span class="label">Steps</span>
+        <h2 class="section-title">参加の流れ</h2>
+      </div>
+      <div class="steps-list">
+        <div class="step-item reveal">
+          <div class="step-left en">01</div>
+          <div class="step-right">
+            <span class="step-tag">Event</span>
+            <div class="step-title">説明会へ参加</div>
+            <div class="step-desc">本プログラムの詳細・条件・スケジュールをご説明します。個別相談も受け付けています。</div>
+          </div>
+        </div>
+        <div class="step-item reveal reveal-delay-1">
+          <div class="step-left en">02</div>
+          <div class="step-right">
+            <span class="step-tag">Application</span>
+            <div class="step-title">参加申し込み</div>
+            <div class="step-desc">提供できるリターン内容（空室の時期・体験メニューなど）を申告していただきます。</div>
+          </div>
+        </div>
+        <div class="step-item reveal reveal-delay-2">
+          <div class="step-left en">03</div>
+          <div class="step-right">
+            <span class="step-tag">Agreement</span>
+            <div class="step-title">合意書の締結</div>
+            <div class="step-desc">成果物（写真・動画）の使用ルールや制作条件について合意書を交わします。</div>
+          </div>
+        </div>
+        <div class="step-item reveal reveal-delay-3">
+          <div class="step-left en">04</div>
+          <div class="step-right">
+            <span class="step-tag">Matching</span>
+            <div class="step-title">クリエイターとのマッチング</div>
+            <div class="step-desc">事務局がクリエイターの得意分野・スタイルを踏まえて最適なマッチングを行います。</div>
+          </div>
+        </div>
+        <div class="step-item reveal">
+          <div class="step-left en">05</div>
+          <div class="step-right">
+            <span class="step-tag">Stay</span>
+            <div class="step-title">クリエイター受け入れ・滞在</div>
+            <div class="step-desc">クリエイターが来訪し、体験・取材・コンテンツ制作を行います。</div>
+          </div>
+        </div>
+        <div class="step-item reveal reveal-delay-1">
+          <div class="step-left en">06</div>
+          <div class="step-right">
+            <span class="step-tag">Result</span>
+            <div class="step-title">成果確認・素材受け取り</div>
+            <div class="step-desc">SNS投稿URLとインサイト（再生数・リーチ数など）を共有します。コンテンツ素材もご提供します。</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="section section--white" id="faq">
+    <div class="container--narrow">
+      <div class="reveal">
+        <span class="label">FAQ</span>
+        <h2 class="section-title">よくある質問</h2>
+      </div>
+      <div class="faq-list">
+        <div class="faq-item reveal">
+          <div class="faq-q" onclick="toggleFaq(this)">
+            費用はかかりますか？
+            <div class="faq-icon"></div>
+          </div>
+          <div class="faq-a">参加費は無料です。ご提供いただくのは空室・食事・体験などのリターンのみです。現金負担は発生しません。</div>
+        </div>
+        <div class="faq-item reveal">
+          <div class="faq-q" onclick="toggleFaq(this)">
+            クリエイターはどんな人ですか？
+            <div class="faq-icon"></div>
+          </div>
+          <div class="faq-a">オーディションで選ばれた9〜15名の若手SNSクリエイター・映像制作者・フォトグラファーです。Instagram、TikTok、YouTubeなどで活動する方が対象です。</div>
+        </div>
+        <div class="faq-item reveal">
+          <div class="faq-q" onclick="toggleFaq(this)">
+            どんな投稿をしてもらえますか？
+            <div class="faq-icon"></div>
+          </div>
+          <div class="faq-a">縦型ショート動画（15〜60秒）を中心に、写真投稿・ストーリーズなどを組み合わせます。内容はクリエイターの得意分野（サーフィン・グルメ・旅・自然など）に合わせて調整します。</div>
+        </div>
+        <div class="faq-item reveal">
+          <div class="faq-q" onclick="toggleFaq(this)">
+            写真・動画は自社でも使えますか？
+            <div class="faq-icon"></div>
+          </div>
+          <div class="faq-a">合意書に定められたルールの範囲内で、自社SNSや販促物への活用が可能です。詳細は事務局にご確認ください。</div>
+        </div>
+        <div class="faq-item reveal">
+          <div class="faq-q" onclick="toggleFaq(this)">
+            空室がない時期でも参加できますか？
+            <div class="faq-icon"></div>
+          </div>
+          <div class="faq-a">はい。宿泊以外にも、飲食・体験・物販など様々な形でご参加いただけます。提供できるリターン内容は柔軟に相談できます。</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta-section" id="contact">
+    <div class="container">
+      <span class="cta-eyebrow reveal">Contact &amp; Inquiry</span>
+      <h2 class="cta-title reveal">まずは説明会に<br>お越しください</h2>
+      <p class="cta-desc reveal">詳細のご説明・個別相談も受け付けています。<br>お気軽にお問い合わせください。</p>
+      <div class="cta-contact reveal">
+        <span class="org">Event Organizer</span>
+        <div class="name">アロハ・ブランディング合同会社</div>
+        <div class="meta">
+          担当：長澤 宏樹<br>
+          連携：日向市 経済戦略部 ふるさとプロモーション課<br>
+          　　　プロモーション推進室（黒本室長）
+        </div>
+        <a href="mailto:" class="cta-btn">お問い合わせする</a>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="f-logo">Love日向 ステイ＆シェア</div>
+    <small>© 2026 アロハ・ブランディング合同会社</small>
+  </footer>
+
+  <script>
+    const nav = document.getElementById('nav');
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('scrolled', window.scrollY > 60);
+    });
+
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('visible');
+          io.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+    document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+    function toggleFaq(btn) {
+      const item = btn.closest('.faq-item');
+      const isOpen = item.classList.contains('open');
+      document.querySelectorAll('.faq-item.open').forEach(el => el.classList.remove('open'));
+      if (!isOpen) item.classList.add('open');
+    }
+
+    // ── PASSWORD GATE ──
+    (function() {
+      const PASS = 'aloha';
+      const SESSION_KEY = 'ss_auth';
+
+      if (sessionStorage.getItem(SESSION_KEY) === '1') return;
+
+      // オーバーレイを作成
+      const overlay = document.createElement('div');
+      overlay.style.cssText = [
+        'position:fixed','inset:0','z-index:9999',
+        'background:linear-gradient(160deg,#e0f7ff 0%,#b8eaf7 40%,#caf0f8 100%)',
+        'display:flex','align-items:center','justify-content:center'
+      ].join(';');
+
+      overlay.innerHTML = `
+        <div style="background:#fff;border-radius:20px;padding:48px 40px;
+                    box-shadow:0 8px 40px rgba(0,119,182,0.15);
+                    text-align:center;max-width:360px;width:90%;">
+          <div style="font-size:2rem;margin-bottom:12px;">🌊</div>
+          <div style="font-family:'Noto Sans JP',sans-serif;font-size:1.1rem;
+                      font-weight:700;color:#1A2B3C;margin-bottom:6px;">
+            Love日向 ステイ＆シェア
+          </div>
+          <div style="font-size:0.9rem;color:#4A6278;margin-bottom:28px;">
+            パスワードを入力してください
+          </div>
+          <input id="pw-input" type="password" placeholder="パスワード"
+            style="width:100%;padding:12px 16px;border:1.5px solid #90E0EF;
+                   border-radius:50px;font-size:1rem;outline:none;
+                   text-align:center;letter-spacing:0.1em;
+                   font-family:'Noto Sans JP',sans-serif;margin-bottom:12px;" />
+          <div id="pw-error" style="font-size:0.85rem;color:#e05555;
+                                    min-height:20px;margin-bottom:12px;"></div>
+          <button id="pw-btn"
+            style="width:100%;padding:13px;background:#0077B6;color:#fff;
+                   border:none;border-radius:50px;font-size:1rem;font-weight:700;
+                   cursor:pointer;font-family:'Noto Sans JP',sans-serif;
+                   transition:background 0.2s;">
+            入る
+          </button>
+        </div>`;
+
+      document.body.appendChild(overlay);
+      document.body.style.overflow = 'hidden';
+
+      const input = overlay.querySelector('#pw-input');
+      const btn   = overlay.querySelector('#pw-btn');
+      const error = overlay.querySelector('#pw-error');
+
+      function attempt() {
+        if (input.value === PASS) {
+          sessionStorage.setItem(SESSION_KEY, '1');
+          document.body.style.overflow = '';
+          overlay.style.opacity = '0';
+          overlay.style.transition = 'opacity 0.4s';
+          setTimeout(() => overlay.remove(), 400);
+        } else {
+          error.textContent = 'パスワードが違います';
+          input.value = '';
+          input.focus();
+        }
+      }
+
+      btn.addEventListener('click', attempt);
+      input.addEventListener('keydown', e => { if (e.key === 'Enter') attempt(); });
+      btn.addEventListener('mouseover', () => btn.style.background = '#005f94');
+      btn.addEventListener('mouseout',  () => btn.style.background = '#0077B6');
+
+      setTimeout(() => input.focus(), 100);
+    })();
+  </script>
+</body>
+</html>

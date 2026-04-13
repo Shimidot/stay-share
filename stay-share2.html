@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="robots" content="noindex,nofollow">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Love日向 ステイ＆シェア｜地域事業者の皆さまへ</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --ocean-deep:  #0077B6;
+      --ocean-mid:   #00B4D8;
+      --ocean-light: #90E0EF;
+      --ocean-pale:  #CAF0F8;
+      --sand:        #FDF6EC;
+      --accent:      #FF9F1C;
+      --accent-dark: #E07B00;
+      --text-dark:   #1A2B3C;
+      --text-mid:    #4A6278;
+      --white:       #FFFFFF;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Noto Sans JP', sans-serif;
+      color: var(--text-dark);
+      background: var(--white);
+      overflow-x: hidden;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 18px 48px;
+      background: rgba(255,255,255,0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(0,180,216,0.15);
+      transition: box-shadow 0.3s;
+    }
+    nav.scrolled { box-shadow: 0 2px 24px rgba(0,119,182,0.12); }
+    .nav-logo { font-size: 1rem; font-weight: 700; color: var(--ocean-deep); letter-spacing: 0.02em; }
+    .nav-logo span { color: var(--accent); }
+    .nav-links { display: flex; gap: 32px; list-style: none; }
+    .nav-links a { text-decoration: none; font-size: 0.9rem; font-weight: 500; color: var(--text-mid); transition: color 0.2s; }
+    .nav-links a:hover { color: var(--ocean-deep); }
+    .nav-cta {
+      background: var(--accent); color: var(--white);
+      border: none; border-radius: 50px; padding: 10px 24px;
+      font-size: 0.9rem; font-weight: 700; cursor: pointer;
+      transition: background 0.2s, transform 0.15s;
+      text-decoration: none;
+    }
+    .nav-cta:hover { background: var(--accent-dark); transform: translateY(-1px); }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh;
+      background: linear-gradient(160deg, #e0f7ff 0%, #b8eaf7 40%, #caf0f8 70%, #f0fbff 100%);
+      display: flex; flex-direction: column; justify-content: center; align-items: center;
+      text-align: center; padding: 120px 24px 80px;
+      position: relative; overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute; bottom: -2px; left: 0; right: 0; height: 120px;
+      background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 120'%3E%3Cpath fill='%23ffffff' d='M0,80 C360,20 1080,140 1440,60 L1440,120 L0,120 Z'/%3E%3C/svg%3E") no-repeat bottom;
+      background-size: cover;
+    }
+    .hero-badge {
+      display: inline-block;
+      background: rgba(0,119,182,0.1); color: var(--ocean-deep);
+      border: 1px solid rgba(0,119,182,0.25); border-radius: 50px;
+      padding: 6px 18px; font-size: 0.85rem; font-weight: 700;
+      letter-spacing: 0.08em; margin-bottom: 28px;
+      animation: fadeUp 0.6s ease both;
+    }
+    .hero h1 {
+      font-size: clamp(2.4rem, 6vw, 4.2rem);
+      font-weight: 900; line-height: 1.2; letter-spacing: -0.01em;
+      color: var(--text-dark); margin-bottom: 16px;
+      animation: fadeUp 0.7s 0.1s ease both;
+    }
+    .hero h1 em { font-style: normal; color: var(--ocean-deep); }
+    .hero-sub {
+      font-size: 1.0625rem; font-weight: 400;
+      color: var(--text-mid); max-width: 560px; line-height: 1.8;
+      margin-bottom: 48px;
+      animation: fadeUp 0.7s 0.2s ease both;
+    }
+    .hero-btns {
+      display: flex; gap: 16px; flex-wrap: wrap; justify-content: center;
+      animation: fadeUp 0.7s 0.3s ease both;
+    }
+    .btn-primary {
+      background: var(--ocean-deep); color: var(--white);
+      border-radius: 50px; padding: 16px 36px;
+      font-size: 1.0625rem; font-weight: 700; text-decoration: none;
+      transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
+      box-shadow: 0 4px 20px rgba(0,119,182,0.3);
+    }
+    .btn-primary:hover { background: #005f94; transform: translateY(-2px); box-shadow: 0 8px 28px rgba(0,119,182,0.4); }
+    .btn-outline {
+      background: transparent; color: var(--ocean-deep);
+      border: 2px solid var(--ocean-deep); border-radius: 50px; padding: 14px 36px;
+      font-size: 1.0625rem; font-weight: 700; text-decoration: none;
+      transition: background 0.2s, color 0.2s, transform 0.15s;
+    }
+    .btn-outline:hover { background: var(--ocean-deep); color: var(--white); transform: translateY(-2px); }
+
+    .hero-scroll {
+      position: absolute; bottom: 140px; left: 50%;
+      transform: translateX(-50%);
+      display: flex; flex-direction: column; align-items: center; gap: 8px;
+      color: var(--text-mid); font-size: 0.78rem; letter-spacing: 0.12em;
+      animation: bounce 2s infinite;
+    }
+    .hero-scroll::after {
+      content: ''; display: block; width: 1px; height: 48px;
+      background: linear-gradient(to bottom, var(--ocean-mid), transparent);
+    }
+
+    /* ── SECTION BASE ── */
+    section { padding: 100px 24px; }
+    .container { max-width: 1100px; margin: 0 auto; }
+    .section-label {
+      display: inline-block; font-size: 0.78rem; font-weight: 700;
+      letter-spacing: 0.14em; color: var(--ocean-mid);
+      text-transform: uppercase; margin-bottom: 12px;
+    }
+    .section-title {
+      font-size: clamp(1.8rem, 4vw, 2.8rem); font-weight: 900;
+      line-height: 1.25; color: var(--text-dark); margin-bottom: 16px;
+    }
+    .section-desc {
+      font-size: 1.0625rem; color: var(--text-mid); line-height: 1.85;
+      max-width: 600px; font-weight: 400;
+    }
+
+    /* ── ABOUT ── */
+    .about { background: var(--white); }
+    .about-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 80px;
+      align-items: center; margin-top: 64px;
+    }
+    .about-visual {
+      background: linear-gradient(135deg, var(--ocean-light), var(--ocean-pale));
+      border-radius: 24px; padding: 48px 40px;
+      position: relative; overflow: hidden;
+    }
+    .about-visual::before {
+      content: '🏄';
+      position: absolute; right: -20px; bottom: -20px;
+      font-size: 8rem; opacity: 0.15;
+    }
+    .about-stat { display: flex; flex-direction: column; gap: 1px; }
+    .stat-item {
+      background: var(--white); border-radius: 16px; padding: 20px 24px;
+      box-shadow: 0 2px 16px rgba(0,119,182,0.08);
+    }
+    .stat-num { font-size: 2rem; font-weight: 900; color: var(--ocean-deep); }
+    .stat-num span { font-size: 1rem; font-weight: 500; }
+    .stat-label { font-size: 0.9rem; color: var(--text-mid); margin-top: 4px; font-weight: 400; }
+
+    /* ── BENEFITS ── */
+    .benefits { background: var(--sand); }
+    .benefits-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 24px; margin-top: 56px;
+    }
+    .benefit-card {
+      background: var(--white); border-radius: 20px; padding: 36px 28px;
+      box-shadow: 0 2px 20px rgba(0,119,182,0.07);
+      transition: transform 0.25s, box-shadow 0.25s;
+      border-top: 4px solid transparent;
+    }
+    .benefit-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 12px 36px rgba(0,119,182,0.14);
+      border-top-color: var(--ocean-mid);
+    }
+    .benefit-icon { font-size: 2.4rem; margin-bottom: 20px; }
+    .benefit-title { font-size: 1.0625rem; font-weight: 700; margin-bottom: 10px; color: var(--text-dark); }
+    .benefit-desc { font-size: 1.0625rem; color: var(--text-mid); line-height: 1.75; font-weight: 400; }
+
+    /* ── HOW IT WORKS ── */
+    .how { background: linear-gradient(180deg, #f0fbff 0%, var(--white) 100%); }
+    .flow {
+      display: flex; align-items: stretch; gap: 0; margin-top: 64px;
+      background: var(--white); border-radius: 24px;
+      box-shadow: 0 4px 40px rgba(0,119,182,0.1);
+      overflow: hidden;
+    }
+    .flow-item {
+      flex: 1; padding: 40px 28px; text-align: center;
+      position: relative;
+      border-right: 1px solid rgba(0,180,216,0.15);
+    }
+    .flow-item:last-child { border-right: none; }
+    .flow-item::after {
+      content: '→';
+      position: absolute; right: -14px; top: 50%;
+      transform: translateY(-50%);
+      font-size: 1.4rem; color: var(--ocean-light); z-index: 1;
+    }
+    .flow-item:last-child::after { display: none; }
+    .flow-emoji { font-size: 2.8rem; margin-bottom: 16px; display: block; }
+    .flow-actor { font-size: 0.78rem; font-weight: 700; letter-spacing: 0.1em; color: var(--ocean-mid); text-transform: uppercase; margin-bottom: 8px; }
+    .flow-title { font-size: 1.0625rem; font-weight: 700; color: var(--text-dark); margin-bottom: 8px; }
+    .flow-desc { font-size: 1.0625rem; color: var(--text-mid); line-height: 1.7; font-weight: 400; }
+
+    /* ── STEPS ── */
+    .steps { background: var(--sand); }
+    .steps-list { margin-top: 56px; display: flex; flex-direction: column; gap: 20px; }
+    .step {
+      display: flex; gap: 28px; align-items: flex-start;
+      background: var(--white); border-radius: 18px; padding: 28px 32px;
+      box-shadow: 0 2px 16px rgba(0,119,182,0.06);
+      transition: transform 0.2s;
+    }
+    .step:hover { transform: translateX(6px); }
+    .step-num {
+      min-width: 48px; height: 48px;
+      background: linear-gradient(135deg, var(--ocean-deep), var(--ocean-mid));
+      color: var(--white); font-weight: 900; font-size: 1.1rem;
+      border-radius: 50%; display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0; box-shadow: 0 4px 12px rgba(0,119,182,0.3);
+    }
+    .step-title { font-size: 1.0625rem; font-weight: 700; color: var(--text-dark); margin-bottom: 6px; }
+    .step-desc { font-size: 1.0625rem; color: var(--text-mid); line-height: 1.7; font-weight: 400; }
+
+    /* ── FAQ ── */
+    .faq { background: var(--white); }
+    .faq-list { margin-top: 56px; display: flex; flex-direction: column; gap: 16px; max-width: 800px; }
+    .faq-item {
+      border: 1px solid rgba(0,180,216,0.2); border-radius: 16px;
+      overflow: hidden; transition: box-shadow 0.2s;
+    }
+    .faq-item.open { box-shadow: 0 4px 24px rgba(0,119,182,0.12); }
+    .faq-q {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 22px 28px; cursor: pointer;
+      font-weight: 700; font-size: 1.0625rem;
+      background: var(--white); transition: background 0.2s;
+      user-select: none;
+    }
+    .faq-item.open .faq-q { background: #f0fbff; }
+    .faq-icon {
+      width: 28px; height: 28px; border-radius: 50%;
+      background: var(--ocean-pale); color: var(--ocean-deep);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.2rem; flex-shrink: 0; transition: transform 0.3s;
+    }
+    .faq-item.open .faq-icon { transform: rotate(45deg); }
+    .faq-a {
+      max-height: 0; overflow: hidden; transition: max-height 0.35s ease, padding 0.35s ease;
+      font-size: 1.0625rem; color: var(--text-mid); line-height: 1.8; font-weight: 400;
+      padding: 0 28px;
+    }
+    .faq-item.open .faq-a { max-height: 200px; padding: 0 28px 22px; }
+
+    /* ── CTA ── */
+    .cta {
+      background: linear-gradient(135deg, var(--ocean-deep) 0%, var(--ocean-mid) 100%);
+      text-align: center; padding: 100px 24px;
+      position: relative; overflow: hidden;
+    }
+    .cta::before {
+      content: '';
+      position: absolute; top: -2px; left: 0; right: 0; height: 80px;
+      background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 80'%3E%3Cpath fill='%23fdf6ec' d='M0,40 C480,80 960,0 1440,40 L1440,0 L0,0 Z'/%3E%3C/svg%3E") no-repeat top;
+      background-size: cover;
+    }
+    .cta h2 { font-size: clamp(1.8rem, 4vw, 2.8rem); font-weight: 900; color: var(--white); margin-bottom: 16px; }
+    .cta p { font-size: 1.0625rem; color: rgba(255,255,255,0.9); margin-bottom: 40px; line-height: 1.8; font-weight: 400; }
+    .cta-box {
+      display: inline-block; background: rgba(255,255,255,0.12);
+      border: 1px solid rgba(255,255,255,0.3); border-radius: 20px;
+      padding: 32px 48px; backdrop-filter: blur(8px);
+      color: var(--white);
+    }
+    .cta-box .org { font-size: 0.9rem; opacity: 0.8; margin-bottom: 6px; }
+    .cta-box .name { font-size: 1.4rem; font-weight: 900; margin-bottom: 16px; }
+    .cta-box .meta { font-size: 1.0625rem; opacity: 0.85; line-height: 2; font-weight: 400; }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--text-dark); color: rgba(255,255,255,0.4);
+      text-align: center; padding: 32px 24px; font-size: 1.0625rem;
+    }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(28px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes bounce {
+      0%, 100% { transform: translateX(-50%) translateY(0); }
+      50%       { transform: translateX(-50%) translateY(8px); }
+    }
+    .reveal {
+      opacity: 0; transform: translateY(32px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 768px) {
+      nav { padding: 16px 20px; }
+      .nav-links { display: none; }
+      .about-grid { grid-template-columns: 1fr; gap: 40px; }
+      .flow { flex-direction: column; }
+      .flow-item { border-right: none; border-bottom: 1px solid rgba(0,180,216,0.15); }
+      .flow-item::after { content: '↓'; right: auto; left: 50%; bottom: -16px; top: auto; transform: translateX(-50%); }
+      .flow-item:last-child::after { display: none; }
+      .step { padding: 20px; }
+      .cta-box { padding: 24px 28px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav id="nav">
+    <div class="nav-logo">Love日向 <span>ステイ＆シェア</span></div>
+    <ul class="nav-links">
+      <li><a href="#about">企画について</a></li>
+      <li><a href="#benefits">メリット</a></li>
+      <li><a href="#how">仕組み</a></li>
+      <li><a href="#steps">参加の流れ</a></li>
+      <li><a href="#faq">FAQ</a></li>
+    </ul>
+    <a href="#cta" class="nav-cta">参加を検討する</a>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <span class="hero-badge">🌊 令和8年度 日向市ブランディング事業</span>
+    <h1>あなたのお店を、<br><em>SNSで</em>日本中に<br>届けませんか？</h1>
+    <p class="hero-sub">
+      若手クリエイターが日向市に滞在し、<br>
+      あなたの空室・体験・サービスを魅力的なコンテンツに。<br>
+      追加費用ゼロで、本格的なSNS発信をはじめましょう。
+    </p>
+    <div class="hero-btns">
+      <a href="#steps" class="btn-primary">参加の流れを見る</a>
+      <a href="#about" class="btn-outline">詳しく知る</a>
+    </div>
+    <div class="hero-scroll">SCROLL</div>
+  </section>
+
+  <!-- ABOUT -->
+  <section class="about" id="about">
+    <div class="container">
+      <div class="reveal">
+        <span class="section-label">About</span>
+        <h2 class="section-title">日向市と<br>クリエイターをつなぐ<br>新しい仕組み</h2>
+        <p class="section-desc">
+          オフシーズンの空室、活用できていない体験プログラム。<br>
+          SNSで発信したいけれどノウハウがない。<br>
+          そんな課題を、発信力を持つ若手クリエイターとの
+          マッチングで一気に解決します。
+        </p>
+      </div>
+      <div class="about-grid">
+        <div class="about-visual reveal">
+          <div class="about-stat">
+            <div class="stat-item">
+              <div class="stat-num">9<span>〜</span>15<span>名</span></div>
+              <div class="stat-label">選抜クリエイターが日向市に滞在</div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-num">50<span>本以上</span></div>
+              <div class="stat-label">ショート動画を制作・発信</div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-num">0<span>円</span></div>
+              <div class="stat-label">参加費用（空室・体験のご提供のみ）</div>
+            </div>
+          </div>
+        </div>
+        <div class="reveal" style="display:flex;flex-direction:column;justify-content:center;gap:24px;">
+          <div style="background:var(--ocean-pale);border-radius:16px;padding:24px 28px;">
+            <div style="font-weight:700;margin-bottom:8px;color:var(--ocean-deep);">🏄 バケーションバイトの新形態</div>
+            <p style="font-size:1.0625rem;color:var(--text-mid);line-height:1.75;font-weight:400;">
+              クリエイターは宿代・交通費無料で滞在し、取材・体験・コンテンツ制作を行います。地域事業者は空きリソースを活用しながら、本格的なSNS発信を実現できます。
+            </p>
+          </div>
+          <div style="background:var(--sand);border-radius:16px;padding:24px 28px;">
+            <div style="font-weight:700;margin-bottom:8px;color:var(--accent-dark);">🤝 Win-Win な関係性</div>
+            <p style="font-size:1.0625rem;color:var(--text-mid);line-height:1.75;font-weight:400;">
+              クリエイター側は「実績と発信力の向上」、地域事業者側は「集客・知名度アップ」という双方の利益が成立する持続可能なモデルです。
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- BENEFITS -->
+  <section class="benefits" id="benefits">
+    <div class="container">
+      <div class="reveal" style="text-align:center;margin-bottom:8px;">
+        <span class="section-label">Benefits</span>
+        <h2 class="section-title">参加すると<br>こんなメリットがあります</h2>
+      </div>
+      <div class="benefits-grid">
+        <div class="benefit-card reveal">
+          <div class="benefit-icon">📱</div>
+          <div class="benefit-title">無料のSNS発信</div>
+          <div class="benefit-desc">Instagram・TikTok・YouTube Shortsなど、縦型ショート動画を中心に継続的に発信。プロクオリティのコンテンツが無料で手に入ります。</div>
+        </div>
+        <div class="benefit-card reveal">
+          <div class="benefit-icon">🏨</div>
+          <div class="benefit-title">空室・空きリソースの活用</div>
+          <div class="benefit-desc">オフシーズンや平日の空室、体験プログラムの空き枠をリターンとして提供するだけ。在庫化できなかったリソースが価値に変わります。</div>
+        </div>
+        <div class="benefit-card reveal">
+          <div class="benefit-icon">🌏</div>
+          <div class="benefit-title">新しい顧客層へのリーチ</div>
+          <div class="benefit-desc">若年層・旅行好き・サーフィン・アウトドア層など、これまでリーチできていなかったSNSユーザーへ自然な形で認知が広がります。</div>
+        </div>
+        <div class="benefit-card reveal">
+          <div class="benefit-icon">🎬</div>
+          <div class="benefit-title">コンテンツ素材の取得</div>
+          <div class="benefit-desc">クリエイターが制作した写真・動画素材を、合意書に基づいて自社SNSや販促物にも活用できます。</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- HOW IT WORKS -->
+  <section class="how" id="how">
+    <div class="container">
+      <div class="reveal" style="text-align:center;margin-bottom:8px;">
+        <span class="section-label">How it Works</span>
+        <h2 class="section-title">応援の循環が<br>日向の魅力を広げる</h2>
+      </div>
+      <div class="flow reveal">
+        <div class="flow-item">
+          <span class="flow-emoji">🏪</span>
+          <div class="flow-actor">地域事業者</div>
+          <div class="flow-title">空室・体験を提供</div>
+          <div class="flow-desc">宿泊・食事・体験などをリターンとして持ち寄ります</div>
+        </div>
+        <div class="flow-item">
+          <span class="flow-emoji">🤝</span>
+          <div class="flow-actor">事務局</div>
+          <div class="flow-title">マッチング</div>
+          <div class="flow-desc">クリエイターの得意分野・希望を踏まえて調整します</div>
+        </div>
+        <div class="flow-item">
+          <span class="flow-emoji">🎥</span>
+          <div class="flow-actor">クリエイター</div>
+          <div class="flow-title">滞在・取材・発信</div>
+          <div class="flow-desc">現地で体験し、日向の魅力をSNSでリアルに届けます</div>
+        </div>
+        <div class="flow-item">
+          <span class="flow-emoji">📈</span>
+          <div class="flow-actor">地域全体</div>
+          <div class="flow-title">認知拡大・関係人口増加</div>
+          <div class="flow-desc">継続的な発信が日向ファンを育てていきます</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- STEPS -->
+  <section class="steps" id="steps">
+    <div class="container">
+      <div class="reveal">
+        <span class="section-label">Steps</span>
+        <h2 class="section-title">参加の流れ</h2>
+        <p class="section-desc">6つのステップで、気軽に始められます。</p>
+      </div>
+      <div class="steps-list">
+        <div class="step reveal">
+          <div class="step-num">1</div>
+          <div>
+            <div class="step-title">説明会へ参加</div>
+            <div class="step-desc">本プログラムの詳細・条件・スケジュールをご説明します。個別相談も受け付けています。</div>
+          </div>
+        </div>
+        <div class="step reveal">
+          <div class="step-num">2</div>
+          <div>
+            <div class="step-title">参加申し込み</div>
+            <div class="step-desc">提供できるリターン内容（空室の時期・体験メニューなど）を申告していただきます。</div>
+          </div>
+        </div>
+        <div class="step reveal">
+          <div class="step-num">3</div>
+          <div>
+            <div class="step-title">合意書の締結</div>
+            <div class="step-desc">成果物（写真・動画）の使用ルールや制作条件について合意書を交わします。</div>
+          </div>
+        </div>
+        <div class="step reveal">
+          <div class="step-num">4</div>
+          <div>
+            <div class="step-title">クリエイターとのマッチング</div>
+            <div class="step-desc">事務局がクリエイターの得意分野・スタイルを踏まえて最適なマッチングを行います。</div>
+          </div>
+        </div>
+        <div class="step reveal">
+          <div class="step-num">5</div>
+          <div>
+            <div class="step-title">クリエイター受け入れ・滞在</div>
+            <div class="step-desc">クリエイターが来訪し、体験・取材・コンテンツ制作を行います。</div>
+          </div>
+        </div>
+        <div class="step reveal">
+          <div class="step-num">6</div>
+          <div>
+            <div class="step-title">成果確認・素材受け取り</div>
+            <div class="step-desc">SNS投稿URLとインサイト（再生数・リーチ数など）を共有します。コンテンツ素材もご提供します。</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="faq" id="faq">
+    <div class="container">
+      <div class="reveal">
+        <span class="section-label">FAQ</span>
+        <h2 class="section-title">よくある質問</h2>
+      </div>
+      <div class="faq-list">
+        <div class="faq-item reveal">
+          <div class="faq-q" onclick="toggleFaq(this)">
+            <span>費用はかかりますか？</span>
+            <div class="faq-icon">+</div>
+          </div>
+          <div class="faq-a">参加費は無料です。ご提供いただくのは空室・食事・体験などのリターンのみです。現金負担は発生しません。</div>
+        </div>
+        <div class="faq-item reveal">
+          <div class="faq-q" onclick="toggleFaq(this)">
+            <span>クリエイターはどんな人ですか？</span>
+            <div class="faq-icon">+</div>
+          </div>
+          <div class="faq-a">オーディションで選ばれた9〜15名の若手SNSクリエイター・映像制作者・フォトグラファーです。InstagramやTikTok、YouTubeなどで実績を持つ方が対象です。</div>
+        </div>
+        <div class="faq-item reveal">
+          <div class="faq-q" onclick="toggleFaq(this)">
+            <span>どんな投稿をしてもらえますか？</span>
+            <div class="faq-icon">+</div>
+          </div>
+          <div class="faq-a">縦型ショート動画（15〜60秒）を中心に、写真投稿・ストーリーズなどを組み合わせます。内容はクリエイターの得意分野（サーフィン・グルメ・旅・自然など）に合わせて調整します。</div>
+        </div>
+        <div class="faq-item reveal">
+          <div class="faq-q" onclick="toggleFaq(this)">
+            <span>写真・動画は自社でも使えますか？</span>
+            <div class="faq-icon">+</div>
+          </div>
+          <div class="faq-a">合意書に定められたルールの範囲内で、自社SNSや販促物への活用が可能です。詳細は事務局にご確認ください。</div>
+        </div>
+        <div class="faq-item reveal">
+          <div class="faq-q" onclick="toggleFaq(this)">
+            <span>空室がない時期でも参加できますか？</span>
+            <div class="faq-icon">+</div>
+          </div>
+          <div class="faq-a">はい。宿泊以外にも、飲食・体験・物販など様々な形でご参加いただけます。提供できるリターン内容は柔軟に相談できます。</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta" id="cta">
+    <div class="container">
+      <h2 class="reveal">まずは説明会に<br>お越しください</h2>
+      <p class="reveal">詳細のご説明・個別相談も受け付けています。<br>お気軽にお問い合わせください。</p>
+      <div class="cta-box reveal">
+        <div class="org">事務局・お問い合わせ先</div>
+        <div class="name">アロハ・ブランディング合同会社</div>
+        <div class="meta">
+          担当：長澤<br>
+          連携：日向市 経済戦略部 ふるさとプロモーション課<br>
+          プロモーション推進室（黒本室長）
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <p>© 2026 Love日向ステイ＆シェア 事務局 / アロハ・ブランディング合同会社</p>
+  </footer>
+
+  <script>
+    const nav = document.getElementById('nav');
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('scrolled', window.scrollY > 20);
+    });
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((e, i) => {
+        if (e.isIntersecting) {
+          setTimeout(() => e.target.classList.add('visible'), i * 80);
+          observer.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.12 });
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+    function toggleFaq(btn) {
+      const item = btn.closest('.faq-item');
+      const isOpen = item.classList.contains('open');
+      document.querySelectorAll('.faq-item.open').forEach(el => el.classList.remove('open'));
+      if (!isOpen) item.classList.add('open');
+    }
+  </script>
+</body>
+</html>
